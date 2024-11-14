@@ -10,12 +10,15 @@ const User = sequelize.define(
       primaryKey: true,
       autoIncrement: true,
     },
-    name: {
+    username: {
       type: DataTypes.STRING,
     },
     email: {
       type: DataTypes.STRING,
       primaryKey: true,
+    },
+    job_id: {
+      type: DataTypes.INTEGER,
     },
     email_verified_at: {
       type: DataTypes.DATE,
@@ -27,6 +30,9 @@ const User = sequelize.define(
     password: {
       type: DataTypes.STRING,
     },
+    status_id: {
+      type: DataTypes.INTEGER,
+    }
   },
   {
     tableName: "users",

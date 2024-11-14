@@ -1,6 +1,7 @@
 const db = require("../db/database");
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
+const { v4: uuidv4 } = require('uuid');
 
 exports.getTest = async (req, res) => {
   try {
@@ -22,6 +23,7 @@ exports.postUser = async (req, res) => {
     res.json({ id: userId, data: user });
   } catch (err) {
     console.log(err);
+    res.json({ status: false, message: err.errors.message });
   }
 };
 
@@ -31,13 +33,17 @@ exports.storeUser = async (req, res) => {
     let email = req.body.email;
     let password = req.body.password;
     let hashed = await bcrypt.hash(password, 10);
+    let secretToken = uuidv4();
     let user = await User.create({
-      name: username,
+      username: username,
       email: email,
+      job_id: 1,
       password: hashed,
+      token: secretToken,
+      status_id: 1,
     });
-    res.json({ status: true, message: "User added!", data: user });
-  } catch (err) {
-    console.log(err);
+    res.json({ status: true, message: "User added!" });
+  } catch (e) {
+    res.json({ status: false, message: e.errors.message, error: e });
   }
 };
