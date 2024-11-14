@@ -34,6 +34,7 @@ exports.storeUser = async (req, res) => {
     let password = req.body.password;
     let hashed = await bcrypt.hash(password, 10);
     let secretToken = uuidv4();
+    let apiToken = uuidv4();
     let user = await User.create({
       username: username,
       email: email,
@@ -41,6 +42,7 @@ exports.storeUser = async (req, res) => {
       password: hashed,
       token: secretToken,
       status_id: 1,
+      api_token: apiToken,
     });
     res.json({ status: true, message: "User added!" });
   } catch (e) {

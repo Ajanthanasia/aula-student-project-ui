@@ -22,7 +22,6 @@ const User = sequelize.define(
     },
     email_verified_at: {
       type: DataTypes.DATE,
-      primaryKey: false,
     },
     token: {
       type: DataTypes.STRING,
@@ -32,7 +31,10 @@ const User = sequelize.define(
     },
     status_id: {
       type: DataTypes.INTEGER,
-    }
+    },
+    api_token: {
+      type: DataTypes.STRING,
+    },
   },
   {
     tableName: "users",

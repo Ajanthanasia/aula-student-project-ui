@@ -16,28 +16,29 @@ exports.authLogin = async (req, res) => {
       res.json(msgs.successRespoonse(false, "failed", [], 422));
       return;
     }
-    
-    
-    
-
-      let user = await User.findOne({ where: { email: username } });
-
-      if (!user ) {
-        res.json({ status: false, message: "User not founds" });
-        return;
-      }
 
 
-      const passwordValid = await bcrypt.compare(password, user.password);
 
-      if (!passwordValid) {
-        res.status(400).json({ status: false, message: "Invalid Password" });
-        return;
-      } 
 
-        res.status(200).json({ status: true, message: "Logined", data: user });
-    
+    let user = await User.findOne({ where: { email: username } });
+
+    if (!user) {
+      res.json({ status: false, message: "User not founds" });
+      return;
+    }
+
+
+    const passwordValid = await bcrypt.compare(password, user.password);
+
+    if (!passwordValid) {
+      res.status(400).json({ status: false, message: "Invalid Password" });
+      return;
+    }
+
+    res.status(200).json({ status: true, message: "Logined", data: user });
+
   } catch (err) {
     console.log(err);
+    res.json({ status: false, message: err });
   }
 };
